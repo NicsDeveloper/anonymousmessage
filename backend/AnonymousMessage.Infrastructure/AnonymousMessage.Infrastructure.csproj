@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AnonymousMessage.Domain\AnonymousMessage.Domain.csproj" />
+    <ProjectReference Include="..\AnonymousMessage.Application\AnonymousMessage.Application.csproj" />
+  </ItemGroup>
+
+</Project>
