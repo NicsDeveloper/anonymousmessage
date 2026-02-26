@@ -1,0 +1,6 @@
+@anonymousmessage_HostAddress = http://localhost:5185
+
+GET {{anonymousmessage_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

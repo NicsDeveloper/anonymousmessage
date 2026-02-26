@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "epEISj2L34M=",
+  "success": true,
+  "projectFilePath": "c:\\Users\\nicol\\Documents\\GitHub\\anonymousmessage\\anonymousmessage.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\nicol\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.3\\microsoft.aspnetcore.openapi.10.0.3.nupkg.sha512",
+    "C:\\Users\\nicol\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
