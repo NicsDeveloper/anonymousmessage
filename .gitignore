@@ -1,0 +1,72 @@
+# Build and configuration
+**/bin/
+**/obj/
+node_modules/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.cache
+*.log
+
+# Rider
+.idea/
+*.sln.iml
+
+# Rider & Visual Studio Code
+.vscode/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# x64
+.x64/
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/packages/
+
+# Microsoft Azure Web App publish settings
+PublishProfiles/
+
+# User-specific files
+*.userprefs
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# JetBrains IDEs
+*.iws
+
+# Dotnet
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Logs
+*.log
+
+# Temporary
+tmp/
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+# Cake
+tools/**
+
+# IIS Express
+/.vs/**/applicationhost.config
+
+# gitignore extensions
+
+# Other
+.env
+.vscode/
+
