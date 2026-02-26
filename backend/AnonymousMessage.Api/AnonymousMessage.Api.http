@@ -1,6 +1,10 @@
+# NOTE: start the API (`dotnet run` in AnonymousMessage.Api) before running
+# this request.  If the server is not running the REST-client extension will
+# flag the request as an error even though the syntax is correct.
+
 @AnonymousMessage.Api_HostAddress = http://localhost:5159
 
-# GET {{AnonymousMessage.Api_HostAddress}}/weatherforecast/
-# Accept: application/json
+GET {{AnonymousMessage.Api_HostAddress}}/weatherforecast/
+Accept: application/json
 
 ###
