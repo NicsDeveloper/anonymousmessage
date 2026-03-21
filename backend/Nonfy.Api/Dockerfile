@@ -10,7 +10,7 @@ COPY ["Nonfy.Infrastructure/Nonfy.Infrastructure.csproj", "Nonfy.Infrastructure/
 RUN dotnet restore "Nonfy.Api/Nonfy.Api.csproj"
 
 # Install EF tool
-RUN dotnet tool install --global dotnet-ef --version 8.0.0
+RUN dotnet tool install --global dotnet-ef --version 9.0.0
 ENV PATH="$PATH:/root/.dotnet/tools"
 
 # Copy everything else and build
@@ -28,5 +28,7 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 # Copy source for EF migrations
 COPY . /src
+# Install EF tool in the final stage
+RUN dotnet tool install --global dotnet-ef --version 9.0.0
 ENV PATH="$PATH:/root/.dotnet/tools"
 ENTRYPOINT ["dotnet", "Nonfy.Api.dll"]
