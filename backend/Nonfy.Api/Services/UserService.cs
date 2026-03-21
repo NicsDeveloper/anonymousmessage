@@ -10,24 +10,17 @@ public interface IUserService
     Task<User> RegisterUserAsync(string email, string password);
 }
 
-public class UserService : IUserService
+public class UserService(NonfyDbContext context) : IUserService
 {
-    private readonly NonfyDbContext _context;
+    private readonly NonfyDbContext _context = context;
 
-    // Password complexity regex: at least 1 uppercase, 1 lowercase, 1 digit, 1 symbol
     private static readonly Regex PasswordComplexityRegex = new(
         @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':\"",.<>?/\\|`~])",
         RegexOptions.Compiled
     );
 
-    public UserService(NonfyDbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<User> RegisterUserAsync(string email, string password)
     {
-        // Validate email format
         if (string.IsNullOrWhiteSpace(email))
             throw new ArgumentException("Email cannot be null or empty.", nameof(email));
 
@@ -35,7 +28,6 @@ public class UserService : IUserService
         if (!emailValidator.IsValid(email))
             throw new ArgumentException("Email format is invalid.", nameof(email));
 
-        // Validate password strength
         if (string.IsNullOrWhiteSpace(password))
             throw new ArgumentException("Password cannot be null or empty.", nameof(password));
 
@@ -48,13 +40,10 @@ public class UserService : IUserService
                 nameof(password)
             );
 
-        // Generate slug from email (e.g., "john@example.com" -> "john")
         var slug = email.Split('@')[0].ToLowerInvariant();
 
-        // Hash password
         var passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
 
-        // Create and persist user
         var user = new User(email, email, passwordHash, slug);
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
