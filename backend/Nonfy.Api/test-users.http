@@ -1,0 +1,53 @@
+### Create User - Valid Request
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "SecurePass123!"
+}
+
+### Create User - Invalid Email
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "email": "invalid-email",
+  "password": "SecurePass123!"
+}
+
+### Create User - Weak Password (too short)
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "email": "jane@example.com",
+  "password": "Short1!"
+}
+
+### Create User - Weak Password (missing uppercase)
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "weakpassword123!"
+}
+
+### Create User - Weak Password (missing special char)
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "email": "another@example.com",
+  "password": "WeakPassword123"
+}
+
+### Create User - Duplicate Email
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "AnotherPass456!"
+}

@@ -61,19 +61,134 @@ docker run --rm --network host -e ASPNETCORE_ENVIRONMENT=Development -e Connecti
 4. Execute as migrações: `dotnet ef database update` (no projeto Nonfy.Api).
 5. Rode a API: `dotnet run` (no projeto Nonfy.Api).
 
-## Estrutura do Projeto
-
-- **Nonfy.Api**: API Web com ASP.NET Core.
-- **Nonfy.Domain**: Entidades e lógica de domínio.
-- **Nonfy.Application**: Casos de uso e serviços.
-- **Nonfy.Infrastructure**: Acesso a dados com EF Core.
-
 ## Tecnologias
 
 - .NET 9
 - Entity Framework Core 9
 - PostgreSQL
 - Docker
+- BCrypt.Net-Next (password hashing)
+- Minimal APIs
+
+## API Endpoints
+
+### Registrar Usuário
+
+**POST** `/users`
+
+Cria um novo usuário com email e senha.
+
+**Request Body:**
+```json
+{
+  "email": "usuario@example.com",
+  "password": "SecurePass123@"
+}
+```
+
+**Requisitos de Validação:**
+- **Email**: Formato válido (ex: usuario@example.com)
+- **Email**: Deve ser único no sistema (constraint de banco de dados)
+- **Senha**: Mínimo 8 caracteres
+- **Senha**: Deve conter maiúsculas, minúsculas, números e símbolos especiais
+
+**Response (201 Created):**
+```json
+{
+  "id": "d54bc052-b955-47dd-b578-667a948c4faa",
+  "email": "usuario@example.com",
+  "slug": "usuario"
+}
+```
+
+**Error Responses:**
+
+- **400 Bad Request** - Email inválido ou senha fraca
+```json
+{
+  "error": "Email format is invalid. (Parameter 'email')"
+}
+```
+
+- **409 Conflict** - Email já cadastrado
+```json
+{
+  "error": "Email already exists."
+}
+```
+
+- **500 Internal Server Error** - Erro não tratado
+
+**Exemplo de Uso:**
+```bash
+curl -X POST http://localhost:8080/users \
+  -H "Content-Type: application/json" \
+  -d '{"email": "novo@example.com", "password": "SecurePass123@"}'
+```
+
+**Notas de Segurança:**
+- Senhas são hasheadas com BCrypt antes de serem armazenadas
+- Response nunca expõe a senha ou hash
+- O slug é gerado automaticamente a partir do prefixo do email
+
+## Testando Endpoints
+
+### Com curl
+
+```bash
+# Registrar novo usuário
+curl -X POST http://localhost:8080/users \
+  -H "Content-Type: application/json" \
+  -d '{"email": "teste@example.com", "password": "SecurePass123@"}'
+
+# Com falha - email inválido
+curl -X POST http://localhost:8080/users \
+  -H "Content-Type: application/json" \
+  -d '{"email": "invalid", "password": "SecurePass123@"}'
+```
+
+### Com REST Client (VS Code)
+
+Abra o arquivo `Nonfy.Api/test-users.http` no VS Code com a extensão REST Client instalada.
+Os testes incluem:
+- ✅ Registro válido
+- ✅ Email inválido
+- ✅ Senha fraca (muito curta)
+- ✅ Senha sem maiúscula
+- ✅ Senha sem símbolo especial
+- ✅ Email duplicado
+
+### OpenAPI (Swagger)
+
+Em desenvolvimento, a documentação OpenAPI está disponível em:
+```
+http://localhost:8080/openapi/v1.json
+```
+
+## Architecture
+
+O projeto segue a **Clean Architecture** com 4 camadas:
+
+```
+Nonfy.Api (Presentation Layer)
+├── Contracts/        # Request/Response DTOs
+│   ├── Requests/     # CreateUserRequest
+│   └── Responses/    # CreateUserResponse
+├── Services/         # Serviços de negócio
+│   └── UserService   # Validação e registro de usuários
+└── Program.cs        # Configuração e endpoints
+
+Nonfy.Application (Application Layer)
+└── [Camada de aplicação]
+
+Nonfy.Domain (Domain Layer)
+├── Entities/         # User (entidade de domínio)
+└── [Lógica de domínio]
+
+Nonfy.Infrastructure (Infrastructure Layer)
+├── NonfyDbContext    # EF Core DbContext
+└── Migrations/       # Migrações do banco
+```
 
 ## Variáveis de Ambiente
 
