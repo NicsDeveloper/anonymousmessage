@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AnonymousMessage.Domain\AnonymousMessage.Domain.csproj" />
-    <ProjectReference Include="..\AnonymousMessage.Application\AnonymousMessage.Application.csproj" />
+    <ProjectReference Include="..\Nonfy.Domain\Nonfy.Domain.csproj" />
+    <ProjectReference Include="..\Nonfy.Application\Nonfy.Application.csproj" />
   </ItemGroup>
 
 </Project>

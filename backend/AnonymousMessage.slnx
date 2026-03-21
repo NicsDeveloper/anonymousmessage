@@ -1,6 +1,0 @@
-<Solution>
-  <Project Path="AnonymousMessage.Api/AnonymousMessage.Api.csproj" />
-  <Project Path="AnonymousMessage.Application/AnonymousMessage.Application.csproj" />
-  <Project Path="AnonymousMessage.Domain/AnonymousMessage.Domain.csproj" />
-  <Project Path="AnonymousMessage.Infrastructure/AnonymousMessage.Infrastructure.csproj" />
-</Solution>

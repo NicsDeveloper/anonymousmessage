@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AnonymousMessage.Application\AnonymousMessage.Application.csproj" />
-    <ProjectReference Include="..\AnonymousMessage.Infrastructure\AnonymousMessage.Infrastructure.csproj" />
+    <ProjectReference Include="..\Nonfy.Application\Nonfy.Application.csproj" />
+    <ProjectReference Include="..\Nonfy.Infrastructure\Nonfy.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

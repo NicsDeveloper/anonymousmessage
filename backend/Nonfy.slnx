@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Nonfy.Api/Nonfy.Api.csproj" />
+  <Project Path="Nonfy.Application/Nonfy.Application.csproj" />
+  <Project Path="Nonfy.Domain/Nonfy.Domain.csproj" />
+  <Project Path="Nonfy.Infrastructure/Nonfy.Infrastructure.csproj" />
+</Solution>
