@@ -11,6 +11,9 @@ obj/
 
 # Environment variables
 .env
+
+# Development settings
+**/appsettings.Development.json
 .idea/
 *.swp
 *.swo
