@@ -1,0 +1,11 @@
+**/bin/
+**/obj/
+**/out/
+**/.vs/
+**/.vscode/
+**/node_modules/
+**/wwwroot/lib/
+**/wwwroot/dist/
+**/*.log
+**/*.tmp
+**/Properties/launchSettings.json
