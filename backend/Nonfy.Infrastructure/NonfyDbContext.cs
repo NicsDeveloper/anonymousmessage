@@ -17,6 +17,7 @@ public class NonfyDbContext : DbContext
         {
             entity.HasKey(u => u.Id);
             entity.Property(u => u.Email).IsRequired().HasMaxLength(255);
+            entity.HasIndex(u => u.Email).IsUnique();
             entity.Property(u => u.BusinessName).IsRequired().HasMaxLength(255);
             entity.Property(u => u.Slug).IsRequired().HasMaxLength(100);
             entity.Property(u => u.PasswordHash).IsRequired();
