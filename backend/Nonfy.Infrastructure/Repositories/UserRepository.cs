@@ -5,14 +5,9 @@ using Nonfy.Domain.Repositories;
 
 namespace Nonfy.Infrastructure.Repositories;
 
-public class UserRepository : IUserRepository
+public class UserRepository(NonfyDbContext context) : IUserRepository
 {
-    private readonly NonfyDbContext _context;
-
-    public UserRepository(NonfyDbContext context)
-    {
-        _context = context;
-    }
+    private readonly NonfyDbContext _context = context;
 
     public async Task AddAsync(User user, CancellationToken cancellationToken = default)
     {
