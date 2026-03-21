@@ -8,6 +8,9 @@ obj/
 
 # IDE files
 .vscode/
+
+# Environment variables
+.env
 .idea/
 *.swp
 *.swo
