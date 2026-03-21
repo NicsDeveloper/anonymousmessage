@@ -44,7 +44,7 @@ docker run -p 5000:80 backend-api:latest
 Após subir os containers:
 
 ```bash
-docker compose exec nonfy-api dotnet ef database update --startup-project /src/Nonfy.Api --project /src/Nonfy.Infrastructure
+docker compose exec api dotnet ef database update --startup-project /src/Nonfy.Api --project /src/Nonfy.Infrastructure
 ```
 
 Ou com docker run:
