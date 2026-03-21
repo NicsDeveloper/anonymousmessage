@@ -1,0 +1,176 @@
+openapi: 3.0.0
+info:
+  title: Nonfy API
+  description: Backend da aplicação Nonfy - API REST para gerenciamento de usuários
+  version: 1.0.0
+  contact:
+    name: Nonfy Development Team
+    url: https://github.com/NicsDeveloper/nonfy
+
+servers:
+  - url: http://localhost:8080
+    description: Desenvolvimento local
+  - url: https://api.nonfy.com
+    description: Produção (futuro)
+
+tags:
+  - name: Users
+    description: Operações relacionadas a usuários
+
+paths:
+  /users:
+    post:
+      tags:
+        - Users
+      summary: Registrar novo usuário
+      description: Cria um novo usuário no sistema com validações de email e senha
+      operationId: createUser
+      requestBody:
+        description: Dados do novo usuário
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+            examples:
+              success:
+                summary: Exemplo de sucesso
+                value:
+                  email: "joao@example.com"
+                  password: "SecurePass123@"
+              invalidEmail:
+                summary: Exemplo com email inválido
+                value:
+                  email: "joao.example.com"
+                  password: "SecurePass123@"
+              weakPassword:
+                summary: Exemplo com senha fraca
+                value:
+                  email: "joao@example.com"
+                  password: "weak"
+      responses:
+        '201':
+          description: Usuário criado com sucesso
+          headers:
+            Location:
+              schema:
+                type: string
+              description: URL do recurso criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUserResponse'
+              example:
+                id: "d54bc052-b955-47dd-b578-667a948c4faa"
+                email: "joao@example.com"
+                slug: "joao"
+        '400':
+          description: Erro de validação (email inválido, senha fraca, etc)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                invalidEmail:
+                  summary: Email inválido
+                  value:
+                    error: "Email format is invalid. (Parameter 'email')"
+                weakPassword:
+                  summary: Senha muito curta
+                  value:
+                    error: "Password must be at least 8 characters long. (Parameter 'password')"
+                complexityPassword:
+                  summary: Senha sem complexidade
+                  value:
+                    error: "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character (!@#$%^&*()_+-=[]{}';:\",.<>?/\\|`~). (Parameter 'password')"
+        '409':
+          description: Conflito - Email já existe no sistema
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Email already exists."
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    CreateUserRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          minLength: 1
+          maxLength: 255
+          description: Email do usuário. Deve ser um email válido e único
+          example: "usuario@example.com"
+        password:
+          type: string
+          minLength: 8
+          maxLength: 256
+          description: |
+            Senha do usuário com requisitos de complexidade:
+            - Mínimo de 8 caracteres
+            - Pelo menos 1 maiúscula (A-Z)
+            - Pelo menos 1 minúscula (a-z)
+            - Pelo menos 1 número (0-9)
+            - Pelo menos 1 símbolo especial (!@#$%^&*()_+-=[]{}';:",.<>?/\|`~)
+          example: "SecurePass123@"
+      example:
+        email: "joao@example.com"
+        password: "SecurePass123@"
+
+    CreateUserResponse:
+      type: object
+      required:
+        - id
+        - email
+        - slug
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identificador único do usuário
+          example: "d54bc052-b955-47dd-b578-667a948c4faa"
+        email:
+          type: string
+          format: email
+          description: Email do usuário cadastrado
+          example: "joao@example.com"
+        slug:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Identificador amigável gerado a partir do prefixo do email
+          example: "joao"
+      example:
+        id: "d54bc052-b955-47dd-b578-667a948c4faa"
+        email: "joao@example.com"
+        slug: "joao"
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          description: Mensagem de erro descritiva
+          example: "Email format is invalid. (Parameter 'email')"
+
+  securitySchemes:
+    # Placeholder para autenticação futura (JWT)
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "JWT token (futuro)"
